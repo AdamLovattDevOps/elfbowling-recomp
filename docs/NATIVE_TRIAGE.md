@@ -107,7 +107,7 @@ SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy ELFBOWL_EXE="orig/1999/Elf Bowling.e
   - The lane with the elves as pins at the far end, and the aim slider with "Press the space bar when the slider is here...".
   - The ten-pin indicator, and a close-up of the ten elves on the right.
   - Before any key, a close-up elf holds up a "SANTA SUX!" sign (a taunt, 14 s run, frame 1700).
-  - After Space, the close-up elves put on fencing masks (frame 2700). They are back to normal by frame 3450, with the slider moving again.
+  - After Space, the close-up elves react to the throw (frame 2700). By frame 3450 the slider is moving again.
   - No score appeared on the board in the frames I checked.
 
 Logs: only the expected stubs. Wininet `LoadLibraryA` → NULL (the web tracker stays off), `FindWindowA("Shell_TrayWnd")` → NULL, and Apple Chancery / Arial Bold for the fonts. No shim errors.

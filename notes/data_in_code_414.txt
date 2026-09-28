@@ -1,0 +1,12 @@
+421b2c resourcestring record {&HInstance(0x4601b0), id 0xfff0} (TResStringRec, 8 bytes) - data, not code
+421b34 resourcestring record {0x4601b0, 0xfff1}
+421b3c resourcestring record {0x4601b0, 0xfff2}
+421b44 resourcestring record {0x4601b0, 0xfff3}
+421b4c resourcestring record {0x4601b0, 0xfff4}
+421b54 resourcestring record {0x4601b0, 0xfff5}
+41c6f4 not data: compiler-generated unit init counter (@Game@C10_4: sub [0x460774],1; jb) - not reproducible from plain C++ yet
+41c704 not data: compiler-generated unit fini counter (@Game@C10_5: add [0x460774],1)
+41e09c not data: compiler-generated (@Opening@C11_4, counter 0x460790)
+41e0ac not data: compiler-generated (@Opening@C11_5)
+41e2ac not data: compiler-generated (@Preopening@C12_3)
+41e2bc not data: compiler-generated (@Preopening@C12_4)

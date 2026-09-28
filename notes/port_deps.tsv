@@ -1,0 +1,127 @@
+kind	lib	module	symbol	calls
+unk	0043a8c4			125
+unk	0044cda4			56
+lib	CP32MT.LIB	new.cpp	@$bnew$qui	55
+lib	VCL35.LIB	Classes.pas	@Classes@Rect$qqriiii	53
+lib	CP32MT.LIB	xxa.cpp	@__InitExceptBlockLDTC	47
+lib	CP32MT.LIB	strcpy.ASM	_TEXT	22
+lib	CP32MT.LIB	memset.ASM	_TEXT	16
+lib	CP32MT.LIB	strcat.ASM	_TEXT	15
+lib	CP32MT.LIB	strlen.ASM	_TEXT	13
+lib	CP32MT.LIB	memmove.ASM	_TEXT	11
+lib	VCLE35.LIB	dstring.cpp	@System@AnsiString@$bdtr$qqrv	9
+lib	CP32MT.LIB	stricmp.c	_TEXT	9
+imp	GDI32.dll!SelectObject			8
+lib	CP32MT.LIB	_close.c	_TEXT	7
+lib	CP32MT.LIB	memcpy.ASM	_TEXT	7
+imp	GDI32.dll!DeleteDC			6
+imp	GDI32.dll!CreateCompatibleDC			5
+lib	CP32MT.LIB	strcmp.ASM	_TEXT	5
+unk	0044938d			5
+lib	VCLE35.LIB	dstring.cpp	@System@AnsiString@$bctr$qqrpxc	4
+lib	VCLE35.LIB	classcre.asm	_TEXT	4
+unk	00453ed1			4
+lib	VCLE35.LIB	dstring.cpp	@System@AnsiString@$bctr$qqrrx17System@AnsiString	4
+unk	0042fdd4			4
+unk	0042fdcc			4
+imp	GDI32.dll!BitBlt			4
+imp	WINMM.dll!mmioStringToFOURCCA			4
+unk	00453ed9			3
+unk	00453ecc			3
+unk	00448fc0			3
+imp	GDI32.dll!SetTextColor			3
+lib	CP32MT.LIB	vnewldtc.cpp	@_vector_new_ldtc_$qpvuiuiuit1uit1	3
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@GetClientHeight$qqrv	3
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@GetClientWidth$qqrv	3
+imp	KERNEL32.dll!FindResourceA			3
+imp	KERNEL32.dll!LoadResource			3
+imp	KERNEL32.dll!LockResource			3
+lib	CP32MT.LIB	strncmp.ASM	_TEXT	3
+imp	KERNEL32.dll!lstrcatA			3
+lib	CP32MT.LIB	time.c	_TEXT	2
+lib	CP32MT.LIB	rand.c	_TEXT	2
+unk	00449399			2
+lib	CP32MT.LIB	strncpy.c	_TEXT	2
+imp	USER32.dll!FindWindowA			2
+imp	USER32.dll!ShowWindow			2
+unk	00448fb0			2
+unk	00434b6c			2
+lib	VCL35.LIB	Controls.pas	@Controls@TWinControl@GetHandle$qqrv	2
+imp	GDI32.dll!SelectPalette			2
+lib	VCL35.LIB	Classes.pas	@Classes@TStream@GetPosition$qqrv	2
+lib	VCL35.LIB	Classes.pas	@Classes@TStream@SetPosition$qqri	2
+imp	GDI32.dll!GetDeviceCaps			2
+unk	004493a5			2
+imp	KERNEL32.dll!LocalAlloc			1
+imp	KERNEL32.dll!TlsSetValue			1
+imp	KERNEL32.dll!TlsAlloc			1
+imp	KERNEL32.dll!TlsGetValue			1
+imp	KERNEL32.dll!LocalFree			1
+imp	KERNEL32.dll!TlsFree			1
+lib	VCL35.LIB	Forms.pas	@Forms@TApplication@Initialize$qqrv	1
+lib	VCL35.LIB	Forms.pas	@Forms@TApplication@SetTitle$qqrx17System@AnsiString	1
+lib	VCL35.LIB	Forms.pas	@Forms@TApplication@CreateForm$qqrp17System@TMetaClasspv	1
+lib	VCL35.LIB	Forms.pas	@Forms@TApplication@Run$qqrv	1
+lib	VCL35.LIB	DsgnIntf.pas	@Dsgnintf@TSetElementProperty@$bdtr$qqrv	1
+lib	VCL35.LIB	Forms.pas	@Forms@TCustomForm@$bctr$qqrp18Classes@TComponent	1
+unk	004403c4			1
+lib	VCL35.LIB	Forms.pas	@Forms@TCustomForm@$bdtr$qqrv	1
+unk	00453cd0			1
+unk	0044eba0			1
+imp	GDI32.dll!CreatePalette			1
+imp	KERNEL32.dll!GlobalMemoryStatus			1
+imp	KERNEL32.dll!GetTickCount			1
+imp	GDI32.dll!CreateDIBSection			1
+imp	GDI32.dll!EnumFontFamiliesA			1
+imp	GDI32.dll!CreateFontIndirectA			1
+imp	GDI32.dll!DeleteObject			1
+imp	GDI32.dll!SetBkMode			1
+imp	USER32.dll!DrawTextA			1
+lib	CP32MT.LIB	del.cpp	@$bdele$qpv	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@Show$qqrv	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@SetHeight$qqri	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@SetWidth$qqri	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@SetLeft$qqri	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@SetTop$qqri	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@BringToFront$qqrv	1
+lib	VCL35.LIB	Controls.pas	@Controls@TControl@SetColor$qqr15Graphics@TColor	1
+lib	VCL35.LIB	Classes.pas	@Classes@TThread@Resume$qqrv	1
+imp	USER32.dll!GetDC			1
+imp	USER32.dll!ReleaseDC			1
+imp	GDI32.dll!RealizePalette			1
+imp	GDI32.dll!GetStockObject			1
+imp	USER32.dll!FillRect			1
+lib	VCL35.LIB	Classes.pas	@Classes@TResourceStream@$bctr$qqrix17System@AnsiStringpc	1
+imp	WINMM.dll!waveOutReset			1
+imp	WINMM.dll!waveOutUnprepareHeader			1
+imp	WINMM.dll!waveOutClose			1
+imp	WINMM.dll!waveOutWrite			1
+imp	WINMM.dll!waveOutPrepareHeader			1
+imp	WINMM.dll!waveOutOpen			1
+imp	WINMM.dll!waveOutGetNumDevs			1
+imp	KERNEL32.dll!SizeofResource			1
+lib	VCL35.LIB	system.pas	@System@TObject@$bctr$qqrv	1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TCustomWinSocket@SendBuf$qqrpvi	1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TCustomWinSocket@ReceiveLength$qqrv	1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TCustomWinSocket@ReceiveBuf$qqrpvi	1
+imp	KERNEL32.dll!LoadLibraryA			1
+imp	KERNEL32.dll!GetProcAddress			1
+imp	KERNEL32.dll!FreeLibrary			1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TClientSocket@$bctr$qqrp18Classes@TComponent	1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TClientSocket@SetClientType$qqr20Scktcomp@TClientType	1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TAbstractSocket@SetHost$qqr17System@AnsiString	1
+lib	INET35.LIB	ScktComp.pas	@Scktcomp@TAbstractSocket@SetPort$qqri	1
+unk	004233dc			1
+lib	VCL35.LIB	Forms.pas	@Forms@TCustomForm@SetClientWidth$qqri	1
+lib	VCL35.LIB	Forms.pas	@Forms@TCustomForm@SetClientHeight$qqri	1
+lib	VCL35.LIB	Forms.pas	@Forms@TCustomForm@Close$qqrv	1
+lib	VCL35.LIB	Forms.pas	@Forms@TApplication@Terminate$qqrv	1
+imp	GDI32.dll!CreateICA			1
+imp	ADVAPI32.dll!RegOpenKeyExA			1
+imp	ADVAPI32.dll!RegQueryValueA			1
+imp	KERNEL32.dll!lstrcpyA			1
+imp	ADVAPI32.dll!RegCloseKey			1
+imp	SHELL32.dll!ShellExecuteA			1
+imp	KERNEL32.dll!lstrlenA			1
+imp	KERNEL32.dll!WinExec			1
+lib	CP32MT.LIB	calloc.c	_TEXT	1

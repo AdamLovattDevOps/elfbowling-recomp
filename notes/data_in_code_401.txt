@@ -1,0 +1,10 @@
+4015e0 RTTI type descriptor for "TForm1 *" (size 4, flags 0x90, name at +0xc)
+401750 Delphi class-name/unit record: "\x06TForm1" ... "\x04Main" (VMT class name data)
+406030 RTTI type descriptor for "TGraphicCast *" (the Cast class is TGraphicCast)
+40134c RTTI type descriptor for "Sysutils::Exception &" (catch-handler type)
+40131a not a function: tail of fn_40128c (WinMain) catch handler, uses caller's [ebp-4]/[ebp-0x2c] and ends in ret 0x10
+401678 RTTI/class tables for TForm1 (field/method tables, "TForm1", "Forms::TForm *")
+# Not data, but not matchable from source under a fn_ name (not produced by bcc32):
+401284 SysInit.pas unit-init stub (dcc32 code: sub [0x4601b8],1; ret), pairs with the init/fin proc at 0x401254 (libmap calls it Webconst@Finalization)
+401ccc @Main@C4_4 unit init counter, synthesized by ILINK32 from #pragma package(smart_init) (see round1_401.md "Unit counters")
+401cdc @Main@C4_5 unit exit counter, synthesized by ILINK32

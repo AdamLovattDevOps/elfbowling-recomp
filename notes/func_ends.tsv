@@ -1,0 +1,8 @@
+40f684	40f6bc	RTTI follows
+411af4	411b74	exception table follows
+40f104	40f150	EH table follows (TPackedStream dtor)
+40f1e4	40f23c	EH table follows (TStream dtor)
+40f734	40f780	EH table follows (TMyThread dtor)
+401884	4018dc	RTTI/EH data follows (TForm dtor inline)
+401a2c	401a6c	RTTI/EH data follows (DelphiInterface<IOleForm> dtor)
+40128c	40134c	WinMain incl. catch handler (EH table follows)

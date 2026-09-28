@@ -1,0 +1,25 @@
+40ebb8 RTTI/typeinfo for TWebTrack* ("TWebTrack *")
+40ecdc TStream type descriptor + "Classes::TStream" strings (compiler-emitted RTTI)
+40f0e0 Delphi-style class name "TPackedStream" + typeinfo pointers
+40f2fc RTTI for "Classes::TCustomMemoryStream *"
+40f65c RTTI for "TMyThread *"
+40f714 TMyThread class name / typeinfo ("TMyThread", "Threads")
+40f9b4 RTTI for "TScene *"
+411ad8 RTTI for "TSpriteGroup *"
+# Not data, but not matchable from source under a fn_ name (compiler generated):
+40f328 @Sprites@C5_4 unit init/exit counter (sub [cnt],1 / jb) - generated per unit
+40f338 @Sprites@C5_5
+40f5e4 @Init@C6_4
+40f5f4 @Init@C6_5
+40f7dc @Threads@C7_3
+40f7ec @Threads@C7_4
+40f9fc @About@C8_3
+40fa0c @About@C8_4
+40f104 compiler-generated destructor (TPackedStream, calls TStream dtor) with EH frame
+40f1e4 compiler-generated TStream-derived destructor (@Classes@TStream@$bdtr)
+40f2a4 compiler-generated TCustomMemoryStream-derived destructor
+40f604 TMyThread::TMyThread(bool) ctor -> TThread ctor, EH frame
+40f734 TMyThread destructor -> TThread dtor, EH frame
+# funcs.tsv boundary problems (code matches, range too long):
+40f684 real end 0x40f6bc (RTTI follows at 0x40f6bc)
+411af4 real end 0x411b74 (exception table follows at 0x411b74)

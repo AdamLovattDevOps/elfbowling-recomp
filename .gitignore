@@ -1,0 +1,14 @@
+# Copyrighted inputs and third-party toolchain; never commit
+orig/
+toolchain/bcb3/
+toolchain/Wine Devel.app/
+toolchain/prefix/
+toolchain/*.list
+toolchain/*.fetch
+build/
+*.obj
+*.tds
+*.exe
+.venv/
+__pycache__/
+scratch/

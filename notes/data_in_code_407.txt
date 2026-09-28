@@ -1,0 +1,12 @@
+40a04c RTTI type descriptor for "TGraphicSprite *" (EH table data)
+40a26c RTTI type descriptor for "TButtonSprite *"
+40a330 RTTI type descriptor for "TTextCast *"
+40ade8 RTTI type descriptor for "TStage *"
+40ae00 RTTI type descriptor for "TSoundMgr *"
+40ae18 RTTI type descriptor for "TCastMgr *"
+40c114 RTTI type descriptor for "TSaveParms *"
+40c514 RTTI type descriptor for "Classes::TResourceStream *[2]"
+40c5c4 RTTI type descriptor for "TSound *"
+40dcc4 RTTI type descriptor for "TSaveCasts *"
+40dd70 RTTI type descriptor for "TPackedResources *"
+40e180 RTTI type descriptor for "TPackedStream *"

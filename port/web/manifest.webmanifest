@@ -1,0 +1,9 @@
+{
+  "name": "Elf Bowling",
+  "short_name": "Elf Bowling",
+  "description": "Elf Bowling (NStorm, 1999) in the browser",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b1830",
+  "theme_color": "#0b1830"
+}

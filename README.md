@@ -12,7 +12,7 @@ Elf Bowling was distributed as freeware ("Distribute freely without modification
 
 ![Title screen, 3x AI-upscaled](docs/screenshots/title-hd.jpg)
 
-| Santa bowls, 3x HD | Scoring, with the elves in fencing masks |
+| Santa bowls, 3x HD | Scoring after two frames |
 |---|---|
 | ![Lane mid-throw in HD](docs/screenshots/lane-hd.jpg) | ![Instormomatic scoreboard after two frames](docs/screenshots/scoring.jpg) |
 

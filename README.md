@@ -10,6 +10,22 @@ SHA-256 dceb5b89544b20744091f55c8ec49d2baaf59bf530ce50a4c2a14d12b069de0c   (1,13
 
 Elf Bowling was distributed as freeware ("Distribute freely without modification"), so any unmodified copy with this checksum works. The prebuilt packages ask for the file on first launch.
 
+![Title screen, 3x AI-upscaled](docs/screenshots/title-hd.jpg)
+
+| Santa bowls, 3x HD | Scoring, with the elves in fencing masks |
+|---|---|
+| ![Lane mid-throw in HD](docs/screenshots/lane-hd.jpg) | ![Instormomatic scoreboard after two frames](docs/screenshots/scoring.jpg) |
+
+**Original pixels (left) and the 3x Real-ESRGAN art (right).** The upscaled art is generated on your machine from your own copy of the game.
+
+![Classic versus HD](docs/screenshots/classic-vs-hd.jpg)
+
+**The web build on an iPhone held sideways,** with the touch BOWL button.
+
+![Web version on iPhone, landscape](docs/screenshots/web-iphone-landscape.jpg)
+
+*Screenshots are of the original 1999 freeware game running on this port.*
+
 ## Quick start
 
 | Platform | How |

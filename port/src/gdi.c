@@ -150,6 +150,33 @@ static int SDLCALL key_watch(void *ud, SDL_Event *e)
     return 1;
 }
 
+/* The game controller's pointer (vcl/forms.cpp registers its source): an arrow in screen
+ * coordinates, drawn over the frame through the renderer's logical size. */
+static int (*s_pointer)(int *x, int *y);
+
+void port_set_pointer_source(int (*fn)(int *x, int *y)) { s_pointer = fn; }
+
+static void draw_pointer(void)
+{
+    int x, y;
+    if (!s_pointer || !s_pointer(&x, &y))
+        return;
+    static const SDL_Point outline[] = {{0, 0}, {0, 14}, {4, 10}, {10, 10}, {0, 0}};
+    SDL_SetRenderDrawColor(s_renderer, 255, 255, 255, 255);
+    for (int r = 1; r < 14; r++) {          /* between x = 0 and the arrow's right edge */
+        int e = r <= 10 ? r - 1 : 10 - (r - 10) * 3 / 2 - 1;
+        if (e >= 1)
+            SDL_RenderDrawLine(s_renderer, x + 1, y + r, x + e, y + r);
+    }
+    SDL_Point p[5];
+    for (int i = 0; i < 5; i++) {
+        p[i].x = x + outline[i].x;
+        p[i].y = y + outline[i].y;
+    }
+    SDL_SetRenderDrawColor(s_renderer, 0, 0, 0, 255);
+    SDL_RenderDrawLines(s_renderer, p, 5);
+}
+
 /* $PORT_WINDOW_SIZE=WxH, else 1x, or up to 2x (85% of the display) when the 3x art shows. */
 static void initial_window_size(int w, int h, int *ww, int *wh)
 {
@@ -200,6 +227,11 @@ int port_init(int w, int h, const char *title)
         SDL_SetWindowMinimumSize(s_window, w / 2, h / 2);
         s_renderer = SDL_CreateRenderer(s_window, -1, 0);
         SDL_AddEventWatch(key_watch, NULL);
+        const char *fs = getenv("PORT_FULLSCREEN");     /* =1: start full screen (the AppImage sets it) */
+        if (fs && *fs == '1') {
+            SDL_SetWindowFullscreen(s_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+            port_log("full screen on");
+        }
         resized = 1;
     }
     /* A later call (the form's bounds changed) keeps the window the player sized; the
@@ -547,6 +579,7 @@ void port_present(void)
             SDL_RenderSetLogicalSize(s_renderer, lw, lh);
             free(buf);
         }
+        draw_pointer();
         SDL_RenderPresent(s_renderer);
     } else {
         if (hi)

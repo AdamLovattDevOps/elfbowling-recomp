@@ -68,6 +68,7 @@ Default DC state: text colour black, background colour white, `OPAQUE`, the defa
 - `GetDeviceCaps` reports `BITSPIXEL` 8 and `PLANES` 1, which is what `fn_40f3dc` checks. It also reports `SIZEPALETTE` 256, `RASTERCAPS` with `RC_PALETTE`, and `HORZRES`/`VERTRES` as the screen size.
 - `port_present()` converts the screen through the **system palette** into an ARGB8888 SDL texture and presents it, or presents the 3x canvas (docs/HIRES.md). Without a renderer it blits to the window surface. With no window (headless) it only converts.
 - The window is resizable. The renderer's logical size letterboxes the picture to the screen's aspect and maps mouse events back to screen coordinates. Alt+Enter or F11 toggles full screen (desktop mode); F9 switches between the 3x art and the classic frame.
+- A game controller plays the game through the same input path (vcl/forms.cpp): A is Space plus a left click at a pointer, Start is Return, and B or Back is Esc. The sticks and d-pad move the pointer, which `port_present()` draws over the frame while a controller drives it (`port_set_pointer_source`). The events go through `dispatch()`, so the game sees ordinary key and mouse input.
 
 **Palettes.**
 
@@ -233,6 +234,7 @@ Stubs log through `port_log` (`[shim] …` on stderr). `PORT_LOG=0` silences it.
 | `PORT_DUMP_DIR` | frame dump directory, default `build/frames` (created) |
 | `PORT_INPUT` | scripted input for headless runs (VCL loop, forms.cpp): `ms:click:x,y;ms:key:sym;...`, times from the first pump; `click` is a left press and release at client (x, y), `key` a press and release of an SDL keycode (13 Return, 27 Esc, 32 space) |
 | `PORT_WINPUT` | scripted events in **window** coordinates, pushed through SDL's queue so the renderer's letterbox mapping applies (gdi.c): `ms:click:x,y;ms:key:sym;ms:size:w,h`, times from the first present |
+| `PORT_FULLSCREEN=1` | start full screen (desktop mode; the Linux AppImage's AppRun sets it unless it is already set, so `PORT_FULLSCREEN=0` gives a window) |
 | `PORT_WINDOW_SIZE` | initial window size `WxH` (default 640x480, or up to 2x the screen when the 3x art shows; the window is resizable) |
 | `PORT_DUMP_WINDOW=1` | frame dumps read back the window (letterbox included) instead of the presented surface |
 | `PORT_DUMP_1X=1` | with the 3x art showing, each dump also writes `NNNN_1x.bmp`, the 1x frame |

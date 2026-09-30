@@ -29,6 +29,11 @@ void port_present(void);
 /* web: size the window (the canvas backing store) for the hi-res frame (gdi.c) */
 void port_hires_window(int scale, float dpr);
 
+/* A game controller's pointer: fn(&x, &y) returns 1 while a controller drives it (screen
+ * coordinates) and port_present() draws it; 0 once the real mouse moves. The VCL layer
+ * registers it (vcl/forms.cpp); without one, no pointer is drawn. */
+void port_set_pointer_source(int (*fn)(int *x, int *y));
+
 /* Write the presented image (palette-converted, 24-bit) as a BMP. 0 = ok. */
 int port_screen_dump_bmp(const char *path);
 

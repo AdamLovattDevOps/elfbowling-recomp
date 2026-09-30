@@ -45,16 +45,27 @@ Uint32 s_lastPresent;
 bool s_dirty;                       // drawn since the last present
 unsigned s_buttons;                 // SDL_BUTTON_LMASK.. of the buttons held
 int s_mods;                         // modifiers of the last key event (injected events do not update SDL's)
+float s_padX = -1, s_padY = -1;     // the controller's pointer, screen coordinates (-1: not placed yet)
+bool s_padShown;                    // a controller moved or clicked it since the mouse last moved
+bool s_padInject;                   // dispatching an event the controller made
+Uint32 s_padTick;                   // SDL_GetTicks() of the last pointer step
 } // namespace
 
 } // namespace Forms
 
 namespace Vcl {
 
+static int padPointer(int *x, int *y);
+
 void EnsureEvents()
 {
     if (!(SDL_WasInit(SDL_INIT_EVENTS) & SDL_INIT_EVENTS))
         SDL_InitSubSystem(SDL_INIT_EVENTS);
+    // Controllers arrive as SDL_CONTROLLERDEVICEADDED (the ones already plugged in too).
+    if (!(SDL_WasInit(SDL_INIT_GAMECONTROLLER) & SDL_INIT_GAMECONTROLLER)) {
+        SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
+        port_set_pointer_source(padPointer);
+    }
     if (Forms::s_wakeEvent == (Uint32)-1)
         Forms::s_wakeEvent = SDL_RegisterEvents(1);
 }
@@ -211,6 +222,136 @@ static void keyPress(Forms::TCustomForm *f, char c)
     f->KeyPress(k);
 }
 
+// ---- game controller ------------------------------------------------------------------------
+// Any SDL game controller plays the game as the keyboard and mouse it was written for:
+//   A      Space (bowl) and a left click at the pointer (the menus' buttons)
+//   Start  Return      B / Back  Esc
+//   left stick, right stick or d-pad: the pointer, drawn by port_present() while in use
+// The events go through dispatch() like real ones, so the game cannot tell them apart.
+static void dispatch(const SDL_Event &e);
+
+static void padPlace(Forms::TCustomForm *f)
+{
+    if (Forms::s_padX < 0 && f) {
+        Forms::s_padX = f->GetClientWidth() / 2.0f;
+        Forms::s_padY = f->GetClientHeight() / 2.0f;
+    }
+}
+
+static void padInject(const SDL_Event &e)
+{
+    Forms::s_padInject = true;
+    dispatch(e);
+    Forms::s_padInject = false;
+}
+
+static void padKey(SDL_Keycode sym, bool down)
+{
+    SDL_Event e;
+    std::memset(&e, 0, sizeof e);
+    e.type = down ? SDL_KEYDOWN : SDL_KEYUP;
+    e.key.state = down ? SDL_PRESSED : SDL_RELEASED;
+    e.key.keysym.sym = sym;
+    e.key.keysym.scancode = SDL_GetScancodeFromKey(sym);
+    padInject(e);
+}
+
+static void padClick(bool down)
+{
+    padPlace(inputForm());
+    SDL_Event e;
+    std::memset(&e, 0, sizeof e);
+    e.type = down ? SDL_MOUSEBUTTONDOWN : SDL_MOUSEBUTTONUP;
+    e.button.button = SDL_BUTTON_LEFT;
+    e.button.state = down ? SDL_PRESSED : SDL_RELEASED;
+    e.button.clicks = 1;
+    e.button.x = (int)Forms::s_padX;
+    e.button.y = (int)Forms::s_padY;
+    padInject(e);
+}
+
+static void padButton(Uint8 button, bool down)
+{
+    switch (button) {
+    case SDL_CONTROLLER_BUTTON_A:
+        padClick(down);
+        padKey(SDLK_SPACE, down);
+        break;
+    case SDL_CONTROLLER_BUTTON_START:
+        padKey(SDLK_RETURN, down);
+        break;
+    case SDL_CONTROLLER_BUTTON_B:
+    case SDL_CONTROLLER_BUTTON_BACK:
+        padKey(SDLK_ESCAPE, down);
+        break;
+    default:
+        break;
+    }
+}
+
+static float padAxis(SDL_GameController *c, SDL_GameControllerAxis a)
+{
+    const float dead = 0.2f;
+    float v = SDL_GameControllerGetAxis(c, a) / 32767.0f;
+    float m = v < 0 ? -v : v;
+    if (m <= dead)
+        return 0;
+    m = (m - dead) / (1 - dead);
+    if (m > 1)
+        m = 1;
+    return (v < 0 ? -1 : 1) * m * m;        // fine control near the centre
+}
+
+// Move the pointer by the sticks and d-pad; true while one is held (the loop must not idle).
+static bool padStep()
+{
+    Uint32 now = SDL_GetTicks();
+    float dt = Forms::s_padTick ? (now - Forms::s_padTick) / 1000.0f : 0;
+    Forms::s_padTick = now;
+    if (dt > 0.1f)
+        dt = 0.1f;
+    float vx = 0, vy = 0;
+    for (int i = 0; i < SDL_NumJoysticks(); i++) {
+        if (!SDL_IsGameController(i))
+            continue;
+        SDL_GameController *c = SDL_GameControllerFromInstanceID(SDL_JoystickGetDeviceInstanceID(i));
+        if (!c)
+            continue;
+        vx += padAxis(c, SDL_CONTROLLER_AXIS_LEFTX) + padAxis(c, SDL_CONTROLLER_AXIS_RIGHTX);
+        vy += padAxis(c, SDL_CONTROLLER_AXIS_LEFTY) + padAxis(c, SDL_CONTROLLER_AXIS_RIGHTY);
+        vx += SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) -
+              SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
+        vy += SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_DOWN) -
+              SDL_GameControllerGetButton(c, SDL_CONTROLLER_BUTTON_DPAD_UP);
+    }
+    Forms::TCustomForm *f = inputForm();
+    if ((vx == 0 && vy == 0) || !f)
+        return false;
+    padPlace(f);
+    const float speed = 420;                // screen pixels a second at full tilt (the screen is 640 wide)
+    int ox = (int)Forms::s_padX, oy = (int)Forms::s_padY;
+    float w = (float)f->GetClientWidth() - 1, h = (float)f->GetClientHeight() - 1;
+    Forms::s_padX += vx * speed * dt;
+    Forms::s_padY += vy * speed * dt;
+    Forms::s_padX = Forms::s_padX < 0 ? 0 : Forms::s_padX > w ? w : Forms::s_padX;
+    Forms::s_padY = Forms::s_padY < 0 ? 0 : Forms::s_padY > h ? h : Forms::s_padY;
+    if (!Forms::s_padShown) {
+        Forms::s_padShown = true;
+        SDL_ShowCursor(SDL_DISABLE);
+    }
+    Forms::s_dirty = true;                  // redraw the pointer
+    if ((int)Forms::s_padX != ox || (int)Forms::s_padY != oy) {
+        SDL_Event e;
+        std::memset(&e, 0, sizeof e);
+        e.type = SDL_MOUSEMOTION;
+        e.motion.state = Forms::s_buttons;
+        e.motion.x = (int)Forms::s_padX;
+        e.motion.y = (int)Forms::s_padY;
+        padInject(e);
+    }
+    return true;
+}
+
 static void dispatch(const SDL_Event &e)
 {
     Forms::TCustomForm *f = inputForm();
@@ -277,6 +418,15 @@ static void dispatch(const SDL_Event &e)
         }
         break;
     case SDL_MOUSEMOTION:
+        if (!Forms::s_padInject) {          // the real mouse takes the pointer back
+            Forms::s_padX = (float)e.motion.x;
+            Forms::s_padY = (float)e.motion.y;
+            if (Forms::s_padShown) {
+                Forms::s_padShown = false;
+                Forms::s_dirty = true;
+                SDL_ShowCursor(SDL_ENABLE);
+            }
+        }
         if (f)
             f->MouseMove(mouseShift(Forms::s_buttons, Forms::s_mods | SDL_GetModState()), e.motion.x, e.motion.y);
         break;
@@ -313,12 +463,33 @@ static void dispatch(const SDL_Event &e)
         }
         break;
     }
+    case SDL_CONTROLLERDEVICEADDED:
+        if (SDL_GameControllerOpen(e.cdevice.which))
+            port_log("controller: %s", SDL_GameControllerNameForIndex(e.cdevice.which));
+        break;
+    case SDL_CONTROLLERDEVICEREMOVED:
+        if (SDL_GameController *c = SDL_GameControllerFromInstanceID(e.cdevice.which))
+            SDL_GameControllerClose(c);
+        break;
+    case SDL_CONTROLLERBUTTONDOWN:
+    case SDL_CONTROLLERBUTTONUP:
+        padButton(e.cbutton.button, e.type == SDL_CONTROLLERBUTTONDOWN);
+        break;
     default:
         break;
     }
 }
 
 void DispatchEvent(const void *sdlEvent) { dispatch(*static_cast<const SDL_Event *>(sdlEvent)); }
+
+static int padPointer(int *x, int *y)
+{
+    if (!Forms::s_padShown)
+        return 0;
+    *x = (int)Forms::s_padX;
+    *y = (int)Forms::s_padY;
+    return 1;
+}
 
 static const Uint32 kPresentMs = 8;     // at most ~120 presents a second
 
@@ -400,6 +571,8 @@ bool PumpOnce(bool wait, unsigned waitMs)
 {
     EnsureEvents();
     bool did = scriptStep();
+    if (padStep())
+        did = true;
     SDL_Event e;
     // Bounded, so a flood of motion events cannot starve Synchronize calls.
     for (int n = 0; n < 256 && SDL_PollEvent(&e); n++) {
@@ -454,6 +627,7 @@ static void WebFrame()
 {
     EnsureEvents();
     scriptStep();
+    padStep();
     SDL_Event e;
     for (int n = 0; n < 256 && SDL_PollEvent(&e); n++)
         dispatch(e);

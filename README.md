@@ -36,6 +36,12 @@ Elf Bowling was distributed as freeware ("Distribute freely without modification
 | iOS | `port/pkg/build_ipa.sh <your Apple team ID>`. The IPA is signed with your own account, so none is published. |
 | Web | See `port/web/README.md` (Emscripten). |
 
+## Controls
+
+- **Mouse and keyboard**, as in 1999: click the menus, Space or Enter bowls, Esc goes back. F11 (or Alt+Enter) toggles full screen, and F9 toggles the HD art.
+- **Game controller** (any SDL-supported pad; desktop builds): A bowls and clicks, the left stick, right stick or d-pad moves a pointer, Start is Enter, and B or Back is Esc. Touching the mouse hides the pointer again.
+- The **Linux AppImage starts full screen**. Set `PORT_FULLSCREEN=0` to get a window instead.
+
 Verifying the byte match (`make verify`) is optional and only needed for decompilation work. It requires your own copy of Borland C++Builder 3 under Wine; see docs/MATCHING.md.
 
 ## Target binary

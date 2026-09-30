@@ -27,6 +27,7 @@ cat > "$APPDIR/AppRun" <<'RUN'
 HERE=$(dirname "$(readlink -f "$0")")
 export LD_LIBRARY_PATH="$HERE/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 export PORT_FONT_DIR="${PORT_FONT_DIR:-$HERE/usr/share/elfbowl/fonts}"
+export PORT_FULLSCREEN="${PORT_FULLSCREEN:-1}"     # PORT_FULLSCREEN=0 for a window; F11 toggles
 if [ -z "${ELFBOWL_EXE:-}" ]; then
   for d in "$(dirname "${APPIMAGE:-$0}")" "$PWD" "$HOME"; do
     [ -f "$d/Elf Bowling.exe" ] && { export ELFBOWL_EXE="$d/Elf Bowling.exe"; break; }
